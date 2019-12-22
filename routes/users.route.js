@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const { User, validate, validateResetPassword, tokenGenerator } = require("../models/user.model.js");
 const express = require("express");
 const router = express.Router();
-const JsonService = require('../services/db')
+const JsonService = require('../services/db');
 
 router.get("/current", auth, async (req, res) => {
     let inDbUser = await JsonService.find((db) => {
@@ -69,7 +69,7 @@ router.post("/reset_password", async (req, res) => {
         })
     });
 
-    if (typeof inDbUser == 'undefined' ) return res.status(400).jsonp('User is not exists');
+    if (typeof inDbUser == 'undefined' ) return res.status(400).jsonp('User does not exists');
 
     let newPass = await bcrypt.hash(body.password, 10);
 
@@ -103,7 +103,7 @@ router.post("/login", async (req, res) => {
         })
     });
 
-    if (typeof inDbUser == 'undefined' ) return res.status(400).jsonp('User is not exists');
+    if (typeof inDbUser == 'undefined' ) return res.status(400).jsonp('User does not exists');
 
     let isPasswordCorrect = await bcrypt.compare(password, inDbUser.password);
 
